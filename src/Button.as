@@ -2,6 +2,8 @@ package
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.Graphic;
+	import net.flashpunk.graphics.Graphiclist;
+	import net.flashpunk.graphics.Text;
 	import net.flashpunk.Mask;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Stamp;
@@ -11,30 +13,53 @@ package
 	 * */
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.FP;
+	import MyWorld;
 	
 	public class Button extends Entity 
 	{
 		
 		[Embed(source = "../Images/button.png")] private static const BUTTON:Class;
 		[Embed(source = "../Images/buttonDown.png")] public static const BUTTON_DOWN:Class;
-		[Embed(source="../Images/buttonHover.png")]  public static const BUTTON_HOVER:Class;
+		[Embed(source = "../Images/buttonHover.png")]  public static const BUTTON_HOVER:Class;
+		
+		// Button Types
+		public static const TYPE_ONE:Number = 1;
+		public static const TYPE_TWO:Number = 2;
 		
 		protected var clicked:Boolean = false;
+		protected var buttonType:Number;
 		
 		protected var normal:Graphic;
 		protected var hover:Graphic;
 		protected var down:Graphic;
 		
-		public function Button(x:Number = 0, y:Number = 0) //(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null) 
+		protected var label:Text;
+		
+		public function Button(x:Number = 0, y:Number = 0, text:String = "", theButtonType:Number = 0) //(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null) 
 		{
 			super(x, y, graphic, mask);
 			
-			normal = new Stamp(BUTTON);
-			hover = new Stamp(BUTTON_HOVER);
-			down = new Stamp(BUTTON_DOWN);
-    
+			// So we can reference the button's width in the text constructor
+			var normalStamp:Stamp  = new Stamp(BUTTON);
+			
+			// crazy constructor incumming
+			label = new Text(text, 10, 0, { size: 10, color: 0x000000, width: normalStamp.width - 30, wordWrap: true, align: "center" } );
+			// center the text
+			label.y = (normalStamp.height - label.textHeight) * 0.5;
+			
+			normal = new Graphiclist(normalStamp, label);
+			hover = new Graphiclist(new Stamp(BUTTON_HOVER), label);
+			down = new Graphiclist(new Stamp(BUTTON_DOWN), label);
+			
 			graphic = normal;
-			setHitboxTo(graphic);
+			setHitboxTo(normalStamp);
+			
+			buttonType = theButtonType;
+		}
+		
+		public function destroy():void
+		{
+			FP.world.remove(this); 
 		}
 		
 		override public function update():void
@@ -73,8 +98,17 @@ package
          
         protected function click():void
         {
-            FP.screen.color = Math.random() * 0xFFFFFF;
-            trace("click!");
+			if ( buttonType == TYPE_ONE )
+			{
+				FP.screen.color = Math.random() * 0xFFFFFF;
+				trace("click!");
+			}
+			
+			else if ( buttonType == TYPE_TWO )
+			{
+				// send word to MyWorld that we need to start playing
+				MyWorld.instance.Start();
+			}
         }
 		
 	}

@@ -8,7 +8,8 @@ package
 	{
 		public function Main()
 		{
-			super(800, 600, 60, false);
+			//super(800, 600, 60, false);
+			super(1024, 640, 60, false);
 			FP.world = new MyWorld;
 		}
 		
