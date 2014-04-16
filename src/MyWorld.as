@@ -18,7 +18,7 @@ package
 		public static const TYPE_ONE:Number = 1;
 		public static const TYPE_TWO:Number = 2;
 		
-		private var player1:Player;
+		private var player1:Player1;
 		private var level:Level;
 		
 		private var playButton:Button;
@@ -55,11 +55,47 @@ package
 		
 		public function Play():void
 		{
-			add(new Player(100, 400));
+			add(new Player1(100, 400, true));
+			add(new Player2(100, 500));
+			add(new Player3(100, 200));
 			add(new Button(1024 - 100, 0, "Change background color!", TYPE_ONE));
 			add(new Button(1024 - 200, 0, "Change background color!", TYPE_ONE));
 			add(new Button(1024 - 100, 100, "Change background color!", TYPE_ONE));
 			add(new Button(1024 - 200, 100, "Change background color!", TYPE_ONE));
+			Player1Turn();
+		}
+		
+		public function Player1Turn(): void
+		{
+			Player1.turnOver = false;
+			Player1.turn = true;
+			
+			if (Player1.turnOver)
+			{
+				Player2Turn();
+			}
+		}
+		
+		public function Player2Turn(): void
+		{
+			Player2.turnOver = false;
+			Player2.turn = true;
+			
+			if (Player2.turnOver)
+			{
+				Player3Turn();
+			}
+		}
+		
+		public function Player3Turn(): void
+		{
+			Player3.turnOver = false;
+			Player3.turn = true;
+			
+			if (Player3.turnOver)
+			{
+				Player1Turn();
+			}
 		}
 		
 		
