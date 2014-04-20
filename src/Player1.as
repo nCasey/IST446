@@ -61,6 +61,7 @@ package
 			{
 				turnJustEnded = false;
 				MyWorld.currentTurn = "player2";
+				MyWorld.nextTurn = "player3";
 			}
 		}
 	}

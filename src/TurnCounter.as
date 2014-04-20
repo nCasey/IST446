@@ -48,7 +48,16 @@ package
 		 
 		override public function update():void
         {
-			theText = "Current Turn: " + MyWorld.currentTurn;
+			theText = "Current Turn: " + MyWorld.currentTurn + "\nNext Turn: ";
+			
+			if ( MyWorld.nextTurn != "idle" )
+			{
+				theText = theText + MyWorld.nextTurn;
+			}
+			
+			else {
+				theText = theText + MyWorld.nextNextTurn;
+			}
 			
             label.text = theText;
 		}

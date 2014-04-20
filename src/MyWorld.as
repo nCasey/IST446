@@ -27,6 +27,8 @@ package
 		public static var instance:MyWorld;
 		
 		public static var currentTurn:String;
+		public static var nextTurn:String;
+		public static var nextNextTurn:String;
 		
 		public var player1:Player1;
 		public var player2:Player2;
@@ -55,6 +57,7 @@ package
 			if ( currentTurn == "idle" )
 			{
 				currentTurn = "player1";
+				nextTurn = "player2";
 			}
 			super.update();
 		}
@@ -80,6 +83,7 @@ package
 			add(new Button(1024 - 200, 100, "Change background color!", TYPE_ONE));
 			
 			currentTurn = "player1";
+			nextTurn = "player2";
 			
 			turnCounter = new TurnCounter(0, 0, currentTurn);
 			add(turnCounter);

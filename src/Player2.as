@@ -61,6 +61,8 @@ package
 			{
 				turnJustEnded = false;
 				MyWorld.currentTurn = "player3";
+				MyWorld.nextTurn = "idle";
+				MyWorld.nextNextTurn = "player1";
 			}
 		}
 		
