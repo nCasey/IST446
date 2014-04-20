@@ -11,43 +11,19 @@ package
 		// Player.png is 20x40 pixels
 		[Embed(source = "../Images/player3.png")] private const PLAYER:Class;
 		
-		static var turn:Boolean;
-		static var turnOver:Boolean;
+		public var turnJustEnded;
 		
-		public function Player3(X:Number, Y:Number, Turn:Boolean = false)
+		public function Player3(X:Number, Y:Number)
 		{
+			super(X, Y);
 			graphic = new Image(PLAYER);
-			
 			layer = 1;
-		}
-		
-		public function destroy():void
-		{
-			FP.world.remove(this); 
+			turnJustEnded = false;
 		}
 		
 		override public function update():void
 		{
-			/* This comment is here to demonstrate the syntax
-			 * Assign the collided Bullet Entity to a temporary var.
-			var b:Bullet = collide("bullet", x, y) as Bullet;
-			var f:FloorObject = collide("floor", x, y) as FloorObject;
-			var s:SpikeObject = collide("spike", x, y) as SpikeObject;
-
-			// Check if b has a value (true if a Bullet was collided with).
-			if (b)
-			{
-				// Call the Bullet's destroy() function.
-				this.destroy();
-			}
-			
-			if (s)
-			{
-				this.destroy();
-			}
-			 */
-		
-			if ( (y > 600) || (y < 0) || (x < 0) || (x > 800) )
+			if ( (y > 640) || (y < 0) || (x < 0) || (x > 1024) )
 			{
 				this.destroy();
 			}
@@ -57,11 +33,36 @@ package
 				x += 32;
 			}
 			
-			if (Input.pressed(Key.LEFT)) { x -= 32; }
-			if (Input.pressed(Key.RIGHT)) { x += 32; }
-			if (Input.pressed(Key.UP)) { y -= 32; }
-			if (Input.pressed(Key.DOWN)) { y += 32; }
+			if ( MyWorld.currentTurn == "player3" )
+			{
+				if (Input.pressed(Key.LEFT)) 
+				{
+					x -= 32;
+					turnJustEnded = true;
+				}
+				else if (Input.pressed(Key.RIGHT)) 
+				{ 
+					x += 32;
+					turnJustEnded = true;
+				}
+				else if (Input.pressed(Key.UP)) 
+				{
+					y -= 32;
+					turnJustEnded = true;
+				}
+				else if (Input.pressed(Key.DOWN)) 
+				{ 
+					y += 32;
+					turnJustEnded = true;
+				}
+			}
 			
+			if ( turnJustEnded )
+			{
+				turnJustEnded = false;
+				MyWorld.currentTurn = "idle";
+			}
 		}
+		
 	}
 }

@@ -8,10 +8,7 @@ package
 	
 	public class Players extends Entity
 	{	
-		static var turn:Boolean;
-		static var turnOver:Boolean;
-		
-		public function Players(X:Number, Y:Number, Turn:Boolean = false)
+		public function Players(X:Number, Y:Number)
 		{
 			
 			// Here I set the hitbox width/height with the setHitbox function.
@@ -21,10 +18,6 @@ package
 			// change these once again 
 			width = 20;
 			height = 40;
-			
-			turn = Turn;
-			
-			turnOver = true;
 			
 			x = X;
 			y = Y;
@@ -55,48 +48,8 @@ package
 				this.destroy();
 			}
 			 */
-		
-			if ( (y > 600) || (y < 0) || (x < 0) || (x > 800) )
-			{
-				this.destroy();
-			}
-			
-			if (collide("level", x, y)) 
-			{
-				x += 32;
-			}
-			
-			if ( turn )
-			{
-
-				if (Input.pressed(Key.LEFT)) 
-				{
-					x -= 32;
-					turn = false;
-					turnOver = true;
-					
-				}
-				if (Input.pressed(Key.RIGHT)) 
-				{ 
-					x += 32;
-					turn = false;
-					turnOver = true
-				}
-				if (Input.pressed(Key.UP)) 
-				{
-					y -= 32;
-					turn = false;
-					turnOver = true
-				}
-				if (Input.pressed(Key.DOWN)) 
-				{ 
-					y += 32;
-					turn = false;
-					turnOver = true
-				}
-			
-			}
 			
 		}
+			
 	}
 }
