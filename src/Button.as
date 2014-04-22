@@ -22,12 +22,7 @@ package
 		[Embed(source = "../Images/buttonDown.png")] public static const BUTTON_DOWN:Class;
 		[Embed(source = "../Images/buttonHover.png")]  public static const BUTTON_HOVER:Class;
 		
-		// Button Types
-		public static const TYPE_ONE:Number = 1;
-		public static const TYPE_TWO:Number = 2;
-		
 		protected var clicked:Boolean = false;
-		protected var buttonType:Number;
 		
 		protected var normal:Graphic;
 		protected var hover:Graphic;
@@ -35,7 +30,7 @@ package
 		
 		protected var label:Text;
 		
-		public function Button(x:Number = 0, y:Number = 0, text:String = "", theButtonType:Number = 0) //(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null) 
+		public function Button(x:Number = 0, y:Number = 0, text:String = "") //(x:Number=0, y:Number=0, graphic:Graphic=null, mask:Mask=null) 
 		{
 			super(x, y, graphic, mask);
 			
@@ -53,8 +48,6 @@ package
 			
 			graphic = normal;
 			setHitboxTo(normalStamp);
-			
-			buttonType = theButtonType;
 		}
 		
 		public function destroy():void
@@ -96,7 +89,7 @@ package
 			}
         }
          
-        protected function click():void
+        /*protected function click():void
         {
 			if ( buttonType == TYPE_ONE )
 			{
@@ -109,7 +102,10 @@ package
 				// send word to MyWorld that we need to start playing
 				MyWorld.instance.Start();
 			}
-        }
+        }*/
+			
+			// will be implemented by descendant classes
+			public function click():void {}
 		
 	}
 

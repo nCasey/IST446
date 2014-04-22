@@ -11,8 +11,6 @@ package
 		// Player.png is 20x40 pixels
 		[Embed(source = "../Images/player3.png")] private const PLAYER:Class;
 		
-		public var turnJustEnded;
-		
 		public function Player3(X:Number, Y:Number)
 		{
 			super(X, Y);

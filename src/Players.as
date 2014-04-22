@@ -8,19 +8,48 @@ package
 	
 	public class Players extends Entity
 	{	
-		public function Players(X:Number, Y:Number)
+		public var turnJustEnded:Boolean = false;
+		public var moveCommand:Boolean = false;
+		public var nextUp:String;
+		public var nextNextUp:String;
+		
+		[Embed(source = "../Images/player1.png")] private const PLAYER1:Class;
+		[Embed(source = "../Images/player2.png")] private const PLAYER2:Class;
+		[Embed(source = "../Images/player3.png")] private const PLAYER3:Class;
+		
+		public function Players(X:Number, Y:Number, Name:String, Next:String, NextNext:String)
 		{
-			
 			// Here I set the hitbox width/height with the setHitbox function.
-			setHitbox(20, 40); /* change this obvi */
+			setHitbox(32, 32); /* change this obvi */
 
 			// Here I do the same thing by just assigning Player's properties.
 			// change these once again 
-			width = 20;
-			height = 40;
+			width = 32;
+			height = 32;
 			
 			x = X;
 			y = Y;
+			
+			layer = 1;
+			
+			type = "player";
+			
+			name = Name;
+			nextUp = Next;
+			nextNextUp = NextNext;
+			
+			if ( name == "Player 1" )
+			{
+				graphic = new Image(PLAYER1);
+			}
+			else if ( name == "Player 2" )
+			{
+				graphic = new Image(PLAYER2);
+			}
+			else if ( name == "Player 3" )
+			{
+				graphic = new Image(PLAYER3);
+			}
 		}
 		
 		public function destroy():void
@@ -28,27 +57,52 @@ package
 			FP.world.remove(this); 
 		}
 		
+		public function EndTurn():void 
+		{
+			turnJustEnded = false;
+			MyWorld.currentTurn = this.nextUp;
+			MyWorld.nextTurn = this.nextNextUp;
+		}
+		
+		public function HandleMovement():void
+		{
+			// add some kind of graphic illustrating movement range
+			
+			if (Input.pressed(Key.LEFT)) 
+			{
+				x -= 32;
+				turnJustEnded = true;
+			}
+			else if (Input.pressed(Key.RIGHT)) 
+			{ 
+				x += 32;
+				turnJustEnded = true;
+			}
+			else if (Input.pressed(Key.UP)) 
+			{
+				y -= 32;
+				turnJustEnded = true;
+			}
+			else if (Input.pressed(Key.DOWN)) 
+			{ 
+				y += 32;
+				turnJustEnded = true;
+			}
+
+		}
+		
 		override public function update():void
 		{
-			/* This comment is here to demonstrate the syntax
-			 * Assign the collided Bullet Entity to a temporary var.
-			var b:Bullet = collide("bullet", x, y) as Bullet;
-			var f:FloorObject = collide("floor", x, y) as FloorObject;
-			var s:SpikeObject = collide("spike", x, y) as SpikeObject;
-
-			// Check if b has a value (true if a Bullet was collided with).
-			if (b)
+			if ( moveCommand )
 			{
-				// Call the Bullet's destroy() function.
-				this.destroy();
+				HandleMovement();
 			}
 			
-			if (s)
+			if ( turnJustEnded )
 			{
-				this.destroy();
+				moveCommand = false;
+				EndTurn();
 			}
-			 */
-			
 		}
 			
 	}

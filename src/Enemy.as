@@ -100,7 +100,7 @@ package
 			{
 				turnJustEnded = false;
 				MyWorld.currentTurn = this.nextUp;
-				MyWorld.nextTurn = this.nextUp;
+				MyWorld.nextTurn = this.nextNextUp;
 			}
 		}
 	}

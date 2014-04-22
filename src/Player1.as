@@ -8,10 +8,7 @@ package
 	
 	public class Player1 extends Players
 	{
-		// Player.png is 20x40 pixels
-		[Embed(source = "../Images/player1.png")] private const PLAYER:Class;
-		
-		public var turnJustEnded;
+		[Embed(source = "../Images/player1.png")] private const PLAYER1:Class;
 		
 		public function Player1(X:Number, Y:Number)
 		{
@@ -19,11 +16,22 @@ package
 			graphic = new Image(PLAYER);
 			layer = 1;
 			turnJustEnded = false;
-			name = "player3";
+			name = "player1";
 			type = "player";
 		}
 		
-		override public function update():void
+		override public function EndTurn():void
+		{
+			turnJustEnded = false;
+			MyWorld.currentTurn = "player2";
+			MyWorld.nextTurn = "player3";
+		}
+		
+		/*override public function update():void 
+		{
+		}*/
+		
+		/*override public function update():void
 		{
 			if ( (y > 640) || (y < 0) || (x < 0) || (x > 1024) )
 			{
@@ -65,6 +73,6 @@ package
 				MyWorld.currentTurn = "player2";
 				MyWorld.nextTurn = "player3";
 			}
-		}
+		}*/
 	}
 }
