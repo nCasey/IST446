@@ -19,6 +19,8 @@ package
 			graphic = new Image(PLAYER);
 			layer = 1;
 			turnJustEnded = false;
+			name = "player2";
+			type = "player";
 		}
 		
 		override public function update():void

@@ -34,6 +34,15 @@ package
 		public var player2:Player2;
 		public var player3:Player3;
 		
+		// Now make an array containng 5 enemies
+		public var enemyArray:Array;
+		
+		public var enemy1:Enemy;
+		public var enemy2:Enemy;
+		public var enemy3:Enemy;
+		public var enemy4:Enemy;
+		public var enemy5:Enemy;
+		
 		public var turnCounter:TurnCounter;
 		
 		public function MyWorld() 
@@ -77,10 +86,25 @@ package
 			add(player2);
 			player3 = new Player3(100, 400);
 			add(player3);
+			
 			add(new Button(1024 - 100, 0, "Change background color!", TYPE_ONE));
 			add(new Button(1024 - 200, 0, "Change background color!", TYPE_ONE));
 			add(new Button(1024 - 100, 100, "Change background color!", TYPE_ONE));
 			add(new Button(1024 - 200, 100, "Change background color!", TYPE_ONE));
+			
+			enemy1 = new Enemy(700, 100, "Enemy 1", "Enemy 2", "Enemy 3");
+			enemy2 = new Enemy(700, 200, "Enemy 2", "Enemy 3", "Enemy 4");
+			enemy3 = new Enemy(700, 300, "Enemy 3", "Enemy 4", "Enemy 5");
+			enemy4 = new Enemy(700, 400, "Enemy 4", "Enemy 5", "idle");
+			enemy5 = new Enemy(700, 500, 'Enemy 5', "idle", "player1");
+			
+			add(enemy1);
+			add(enemy2);
+			add(enemy3);
+			add(enemy4);
+			add(enemy5);
+			
+			enemyArray = new Array(enemy1, enemy2, enemy3, enemy4, enemy5);
 			
 			currentTurn = "player1";
 			nextTurn = "player2";

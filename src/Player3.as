@@ -19,6 +19,8 @@ package
 			graphic = new Image(PLAYER);
 			layer = 1;
 			turnJustEnded = false;
+			name = "player3";
+			type = "player";
 		}
 		
 		override public function update():void
@@ -60,8 +62,8 @@ package
 			if ( turnJustEnded )
 			{
 				turnJustEnded = false;
-				MyWorld.currentTurn = "idle";
-				MyWorld.nextTurn = "player1";
+				MyWorld.currentTurn = "Enemy 1";
+				MyWorld.nextTurn = "Enemy 2";
 			}
 		}
 		
