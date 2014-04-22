@@ -38,7 +38,7 @@ package
 			{
 				var thisPlayer:Players = MyWorld.instance.getInstance(turn);
 				
-				thisPlayer.moveCommand = true;
+				thisPlayer.moveRadius = true;
 			}
 			
 		}

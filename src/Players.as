@@ -9,9 +9,13 @@ package
 	public class Players extends Entity
 	{	
 		public var turnJustEnded:Boolean = false;
+		public var moveRadius:Boolean = false;
+		public var moveRadiusHandled:Boolean = false;
 		public var moveCommand:Boolean = false;
 		public var nextUp:String;
 		public var nextNextUp:String;
+		public var goToX:Number;
+		public var goToY:Number;
 		
 		[Embed(source = "../Images/player1.png")] private const PLAYER1:Class;
 		[Embed(source = "../Images/player2.png")] private const PLAYER2:Class;
@@ -64,11 +68,11 @@ package
 			MyWorld.nextTurn = this.nextNextUp;
 		}
 		
-		public function HandleMovement():void
+		public function HandleMovementRadius():void
 		{
 			// add some kind of graphic illustrating movement range
 			
-			if (Input.pressed(Key.LEFT)) 
+			/*if (Input.pressed(Key.LEFT)) 
 			{
 				x -= 32;
 				turnJustEnded = true;
@@ -87,12 +91,38 @@ package
 			{ 
 				y += 32;
 				turnJustEnded = true;
-			}
-
+			}*/
+			
+			MyWorld.instance.AddRadius1(x, y);
+			
+			MyWorld.instance.AddMoveHereBlock(x, y);
+			
+			moveRadiusHandled = true;
+		}
+		
+		/*
+		 * MoveHereBlock will set flag that triggers this movement.
+		 * It will also set the values for goToX and goToY
+		 */
+		public function HandleMovement():void
+		{
+			moveTo(goToX, goToY);
+			
+			turnJustEnded = true;
 		}
 		
 		override public function update():void
 		{
+			if ( moveRadius )
+			{
+				HandleMovementRadius();
+			}
+			
+			if ( moveRadiusHandled )
+			{
+				moveRadius = false;
+			}
+			
 			if ( moveCommand )
 			{
 				HandleMovement();
@@ -100,7 +130,7 @@ package
 			
 			if ( turnJustEnded )
 			{
-				moveCommand = false;
+				moveRadius = false;
 				EndTurn();
 			}
 		}

@@ -43,6 +43,35 @@ package
 		public var enemy4:Enemy;
 		public var enemy5:Enemy;
 		
+		// Max movement range = 3. So max number of moveBlocks is 24.
+		// Draw a diagram to confirm.
+		public var moveBlock1:MoveBlock;
+		public var moveBlock2:MoveBlock;
+		public var moveBlock3:MoveBlock;
+		public var moveBlock4:MoveBlock;
+		public var moveBlock5:MoveBlock;
+		public var moveBlock6:MoveBlock;
+		public var moveBlock7:MoveBlock;
+		public var moveBlock8:MoveBlock;
+		public var moveBlock9:MoveBlock;
+		public var moveBlock10:MoveBlock;
+		public var moveBlock11:MoveBlock;
+		public var moveBlock12:MoveBlock;
+		public var moveBlock13:MoveBlock;
+		public var moveBlock14:MoveBlock;
+		public var moveBlock15:MoveBlock;
+		public var moveBlock16:MoveBlock;
+		public var moveBlock17:MoveBlock;
+		public var moveBlock18:MoveBlock;
+		public var moveBlock19:MoveBlock;
+		public var moveBlock20:MoveBlock;
+		public var moveBlock21:MoveBlock;
+		public var moveBlock22:MoveBlock;
+		public var moveBlock23:MoveBlock;
+		public var moveBlock24:MoveBlock;
+		
+		public var moveHereBlock:MoveHereBlock;
+		
 		public var turnCounter:TurnCounter;
 		
 		public function MyWorld() 
@@ -111,6 +140,26 @@ package
 			
 			turnCounter = new TurnCounter(0, 0, currentTurn);
 			add(turnCounter);
+		}
+		
+		// adds a 1 tile movement radius diamond centered at x,y
+		public function AddRadius1(x:Number, y:Number):void
+		{
+			moveBlock1 = new MoveBlock(x, y - 32);
+			moveBlock2 = new MoveBlock(x - 32, y);
+			moveBlock3 = new MoveBlock(x + 32, y);
+			moveBlock4 = new MoveBlock(x, y + 32);
+			
+			add(moveBlock1);
+			add(moveBlock2);
+			add(moveBlock3);
+			add(moveBlock4);
+		}
+		
+		public function AddMoveHereBlock(x:Number, y:Number):void
+		{
+			moveHereBlock = new MoveHereBlock(x + 32, y);
+			add(moveHereBlock);
 		}
 	} // end Class 
 } // end package
