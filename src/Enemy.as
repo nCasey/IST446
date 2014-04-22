@@ -67,6 +67,8 @@ package
 		
 		/*
 		 * Move towards the nearest player. 
+		 * TODO: make it so the enemy can only move horizontal/vertical. The moveTowards
+		 * method will move it diagoally if appropriate.  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 */
 		public function Move():void
 		{

@@ -30,9 +30,9 @@ package
 		public static var nextTurn:String;
 		public static var nextNextTurn:String;
 		
-		public var player1:Players;
-		public var player2:Players;
-		public var player3:Players;
+		public var player1:Player1;
+		public var player2:Player2;
+		public var player3:Player3;
 		
 		// Now make an array containng 5 enemies
 		public var enemyArray:Array;
@@ -109,11 +109,11 @@ package
 		
 		public function Play():void
 		{
-			player1 = new Players(100, 200, "Player 1", "Player 2", "Player 3");
+			player1 = new Player1(100, 200); // , "Player 1", "Player 2", "Player 3");
 			add(player1);
-			player2 = new Players(100, 300, "Player 2", "Player 3", "Enemy 1");
+			player2 = new Player2(100, 300); //, "Player 2", "Player 3", "Enemy 1");
 			add(player2);
-			player3 = new Players(100, 400, "Player 3", "Enemy 1", "Enemy 2");
+			player3 = new Player3(100, 400); // , "Player 3", "Enemy 1", "Enemy 2");
 			add(player3);
 			
 			add(new MoveButton(1024 - 100, 0, "Move"));
@@ -154,6 +154,106 @@ package
 			add(moveBlock2);
 			add(moveBlock3);
 			add(moveBlock4);
+		}
+		
+		// adds a 1 tile movement radius diamond centered at x,y
+		public function AddRadius2(x:Number, y:Number):void
+		{
+			moveBlock1 = new MoveBlock(x, y - 32);
+			moveBlock2 = new MoveBlock(x - 32, y);
+			moveBlock3 = new MoveBlock(x + 32, y);
+			moveBlock4 = new MoveBlock(x, y + 32);
+			
+			moveBlock5 = new MoveBlock(x - 32, y - 32);
+			moveBlock6 = new MoveBlock(x + 32, y - 32);
+			moveBlock7 = new MoveBlock(x - 32, y + 32);
+			moveBlock8 = new MoveBlock(x + 32, y + 32);
+			
+			moveBlock9 = new MoveBlock(x, y - 64);
+			moveBlock10 = new MoveBlock(x - 64, y);
+			moveBlock11 = new MoveBlock(x + 64, y);
+			moveBlock12 = new MoveBlock(x, y + 64);
+			
+			add(moveBlock1);
+			add(moveBlock2);
+			add(moveBlock3);
+			add(moveBlock4);
+			
+			add(moveBlock5);
+			add(moveBlock6);
+			add(moveBlock7);
+			add(moveBlock8);
+			
+			add(moveBlock9);
+			add(moveBlock10);
+			add(moveBlock11);
+			add(moveBlock12);
+		}
+		
+		// adds a 1 tile movement radius diamond centered at x,y
+		public function AddRadius3(x:Number, y:Number):void
+		{
+			moveBlock1 = new MoveBlock(x, y - 32);
+			moveBlock2 = new MoveBlock(x - 32, y);
+			moveBlock3 = new MoveBlock(x + 32, y);
+			moveBlock4 = new MoveBlock(x, y + 32);
+			
+			moveBlock5 = new MoveBlock(x - 32, y - 32);
+			moveBlock6 = new MoveBlock(x + 32, y - 32);
+			moveBlock7 = new MoveBlock(x - 32, y + 32);
+			moveBlock8 = new MoveBlock(x + 32, y + 32);
+			
+			moveBlock9 = new MoveBlock(x, y - 64);
+			moveBlock10 = new MoveBlock(x - 64, y);
+			moveBlock11 = new MoveBlock(x + 64, y);
+			moveBlock12 = new MoveBlock(x, y + 64);
+			
+			//////////////////////////////////////
+			
+			moveBlock13 = new MoveBlock(x - 32, y - 64);
+			moveBlock14 = new MoveBlock(x + 32, y - 64);
+			moveBlock15 = new MoveBlock(x - 32, y + 64);
+			moveBlock16 = new MoveBlock(x + 32, y + 64);
+			
+			moveBlock17 = new MoveBlock(x, y - 96);
+			moveBlock18 = new MoveBlock(x - 96, y);
+			moveBlock19 = new MoveBlock(x + 96, y);
+			moveBlock20 = new MoveBlock(x, y + 96);
+			
+			moveBlock21 = new MoveBlock(x - 64, y - 32);
+			moveBlock22 = new MoveBlock(x + 64, y - 32);
+			moveBlock23 = new MoveBlock(x - 64, y + 32);
+			moveBlock24 = new MoveBlock(x + 64, y + 32);
+			
+			add(moveBlock1);
+			add(moveBlock2);
+			add(moveBlock3);
+			add(moveBlock4);
+			
+			add(moveBlock5);
+			add(moveBlock6);
+			add(moveBlock7);
+			add(moveBlock8);
+			
+			add(moveBlock9);
+			add(moveBlock10);
+			add(moveBlock11);
+			add(moveBlock12);
+			
+			add(moveBlock13);
+			add(moveBlock14);
+			add(moveBlock15);
+			add(moveBlock16);
+			
+			add(moveBlock17);
+			add(moveBlock18);
+			add(moveBlock19);
+			add(moveBlock20);
+			
+			add(moveBlock21);
+			add(moveBlock22);
+			add(moveBlock23);
+			add(moveBlock24);
 		}
 		
 		public function AddMoveHereBlock(x:Number, y:Number):void

@@ -42,7 +42,7 @@ package
 			nextUp = Next;
 			nextNextUp = NextNext;
 			
-			if ( name == "Player 1" )
+		/*	if ( name == "Player 1" )
 			{
 				graphic = new Image(PLAYER1);
 			}
@@ -53,7 +53,7 @@ package
 			else if ( name == "Player 3" )
 			{
 				graphic = new Image(PLAYER3);
-			}
+			}*/
 		}
 		
 		public function destroy():void
@@ -68,37 +68,31 @@ package
 			MyWorld.nextTurn = this.nextNextUp;
 		}
 		
-		public function HandleMovementRadius():void
-		{
-			// add some kind of graphic illustrating movement range
-			
-			/*if (Input.pressed(Key.LEFT)) 
+		/*public function HandleMovementRadius():void
+		{	
+			/*if ( name == "Player 1" )
 			{
-				x -= 32;
-				turnJustEnded = true;
+				MyWorld.instance.AddRadius1(x, y);
 			}
-			else if (Input.pressed(Key.RIGHT)) 
-			{ 
-				x += 32;
-				turnJustEnded = true;
-			}
-			else if (Input.pressed(Key.UP)) 
+			else if ( name == "Player 2" )
 			{
-				y -= 32;
-				turnJustEnded = true;
+				
 			}
-			else if (Input.pressed(Key.DOWN)) 
-			{ 
-				y += 32;
-				turnJustEnded = true;
-			}*/
+			else if ( name == "Player 3" )
+			{
+				
+			}
 			
-			MyWorld.instance.AddRadius1(x, y);
+			
+			 * Better idea than the above if statements:
+				 * just have the HandleMovementRadius function be inside
+				 * the classes of Player1, Player2, Player3
+			  
 			
 			MyWorld.instance.AddMoveHereBlock(x, y);
 			
 			moveRadiusHandled = true;
-		}
+		}*/
 		
 		/*
 		 * MoveHereBlock will set flag that triggers this movement.
@@ -110,6 +104,8 @@ package
 			
 			turnJustEnded = true;
 		}
+		
+		public function HandleMovementRadius():void{}
 		
 		override public function update():void
 		{
@@ -130,7 +126,7 @@ package
 			
 			if ( turnJustEnded )
 			{
-				moveRadius = false;
+				moveCommand = false;
 				EndTurn();
 			}
 		}

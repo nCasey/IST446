@@ -9,61 +9,36 @@ package
 	public class Player2 extends Players
 	{
 		// Player.png is 20x40 pixels
-		[Embed(source = "../Images/player2.png")] private const PLAYER:Class;
+		[Embed(source = "../Images/player2.png")] private const PLAYER2:Class;
 		
 		public function Player2(X:Number, Y:Number)
 		{
-			super(X, Y);
-			graphic = new Image(PLAYER);
+			setHitbox(32, 32);
+			graphic = new Image(PLAYER2);
 			layer = 1;
 			turnJustEnded = false;
-			name = "player2";
+			
+			name = "Player 2";
+			nextUp = "Player 3";
+			nextNextUp = "Enemey 1";
+			
 			type = "player";
+			
+			// necesarry???
+			super(X, Y, name, nextUp, nextNextUp);
 		}
 		
-		override public function update():void
+		/*
+		 * Player 2 gets a two tile movement range.
+		 */
+		override public function HandleMovementRadius():void 
 		{
-			if ( (y > 640) || (y < 0) || (x < 0) || (x > 1024) )
-			{
-				this.destroy();
-			}
+			MyWorld.instance.AddRadius2(x, y);
+			MyWorld.instance.AddMoveHereBlock(x, y);
 			
-			if (collide("level", x, y)) 
-			{
-				x += 32;
-			}
-			
-			if ( MyWorld.currentTurn == "player2" )
-			{
-				if (Input.pressed(Key.LEFT)) 
-				{
-					x -= 32;
-					turnJustEnded = true;
-				}
-				else if (Input.pressed(Key.RIGHT)) 
-				{ 
-					x += 32;
-					turnJustEnded = true;
-				}
-				else if (Input.pressed(Key.UP)) 
-				{
-					y -= 32;
-					turnJustEnded = true;
-				}
-				else if (Input.pressed(Key.DOWN)) 
-				{ 
-					y += 32;
-					turnJustEnded = true;
-				}
-			}
-			
-			if ( turnJustEnded )
-			{
-				turnJustEnded = false;
-				MyWorld.currentTurn = "player3";
-				MyWorld.nextTurn = "idle";
-				MyWorld.nextNextTurn = "player1";
-			}
+			// Parent class "Players" will take care of the actual movement
+			// once we set this flag to true
+			moveRadiusHandled = true;
 		}
 		
 	}

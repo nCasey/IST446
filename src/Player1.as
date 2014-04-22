@@ -12,67 +12,34 @@ package
 		
 		public function Player1(X:Number, Y:Number)
 		{
-			super(X, Y);
-			graphic = new Image(PLAYER);
+			setHitbox(32, 32);
+			graphic = new Image(PLAYER1);
 			layer = 1;
 			turnJustEnded = false;
-			name = "player1";
+			
+			name = "Player 1";
+			nextUp = "Player 2";
+			nextNextUp = "Player 3";
+			
 			type = "player";
+			
+			// is this even necessary?????
+			super(X, Y, name, nextUp, nextNextUp);
 		}
 		
-		override public function EndTurn():void
+		/*
+		 * Player 1 gets a one tile movement range.
+		 */
+		override public function HandleMovementRadius():void 
 		{
-			turnJustEnded = false;
-			MyWorld.currentTurn = "player2";
-			MyWorld.nextTurn = "player3";
+			MyWorld.instance.AddRadius1(x, y);
+			MyWorld.instance.AddMoveHereBlock(x, y);
+			
+			// Parent class "Players" will take care of the actual movement
+			// once we set this flag to true
+			moveRadiusHandled = true;
 		}
 		
-		/*override public function update():void 
-		{
-		}*/
 		
-		/*override public function update():void
-		{
-			if ( (y > 640) || (y < 0) || (x < 0) || (x > 1024) )
-			{
-				this.destroy();
-			}
-			
-			if (collide("level", x, y)) 
-			{
-				x += 32;
-			}
-			
-			if ( MyWorld.currentTurn == "player1" )
-			{
-				if (Input.pressed(Key.LEFT)) 
-				{
-					x -= 32;
-					turnJustEnded = true;
-				}
-				else if (Input.pressed(Key.RIGHT)) 
-				{ 
-					x += 32;
-					turnJustEnded = true;
-				}
-				else if (Input.pressed(Key.UP)) 
-				{
-					y -= 32;
-					turnJustEnded = true;
-				}
-				else if (Input.pressed(Key.DOWN)) 
-				{ 
-					y += 32;
-					turnJustEnded = true;
-				}
-			}
-			
-			if ( turnJustEnded )
-			{
-				turnJustEnded = false;
-				MyWorld.currentTurn = "player2";
-				MyWorld.nextTurn = "player3";
-			}
-		}*/
 	}
 }
