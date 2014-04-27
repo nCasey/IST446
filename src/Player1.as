@@ -10,6 +10,7 @@ package
 	{
 		[Embed(source = "../Images/player1.png")] private const PLAYER1:Class;
 		
+		// Player 1 is Heavy
 		public function Player1(X:Number, Y:Number)
 		{
 			setHitbox(32, 32);
@@ -25,6 +26,9 @@ package
 			
 			// is this even necessary?????
 			super(X, Y, name, nextUp, nextNextUp);
+			
+			HP = 25;
+			AD = 5;
 		}
 		
 		/*
@@ -38,6 +42,19 @@ package
 			// Parent class "Players" will take care of the actual movement
 			// once we set this flag to true
 			moveRadiusHandled = true;
+		}
+		
+		/*
+		 * Player 1 gets a two tile attack range.
+		 */
+		override public function HandleAttackRadius():void 
+		{
+			MyWorld.instance.AddRadius1(x, y);
+			MyWorld.instance.AddAttackHereBlock(x, y);
+			
+			// Parent class "Players" will take care of the actual movement
+			// once we set this flag to true
+			attackRadiusHandled = true;
 		}
 		
 		

@@ -143,6 +143,8 @@ package
 						MyWorld.instance.moveBlock24.suicide = true;
 					}
 					
+					MyWorld.instance.cancelButton.destroy();
+					
 					// kill yourself
 					destroy();
 				}

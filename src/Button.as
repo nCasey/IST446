@@ -60,8 +60,8 @@ package
             super.update();
              
             if (collidePoint(x, y, world.mouseX, world.mouseY))
-            {
-                if (Input.mousePressed)
+            {	
+                if (Input.mousePressed )
 				{
 					clicked = true;
 				}

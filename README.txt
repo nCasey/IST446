@@ -1,5 +1,8 @@
 NOTES:
 	
+	In case you were wondering, the "idle" turn is necessary for the wrap around from the last
+	enemy to the first player to work properly; otherwise those two turns were going in tandem(sp?)
+	
 1.) Flashpunk's Entity class has some useful functions:
 	distanceFrom -> compares two entiies 
 	distanceToPoint
@@ -30,14 +33,15 @@ IDEA FOR MOVEMENT:
 
 TODO:
 	implement Attack methods:
-		need to check attack range (Difficult)
+		need to check attack range (Difficult?)
+		
+	add transparency aspect to attack/movement range diamonds ?
 		
 	update move functions:
-		need to work through GUI
-		need to check movement range (Difficult)
 		need to check all tiles within movement range to check for collisions etc (Difficult)
 		
 	implement the level
 	
 	add art
 	
+	PROBLEM: if I hit attack, then change my mind and want to move

@@ -12,10 +12,17 @@ package
 		public var moveRadius:Boolean = false;
 		public var moveRadiusHandled:Boolean = false;
 		public var moveCommand:Boolean = false;
+		public var attackRadius:Boolean = false;
+		public var attackRadiusHandled:Boolean = false;
+		public var attackCommand:Boolean = false;
+		public var currentlyAttacking:Enemy;
 		public var nextUp:String;
 		public var nextNextUp:String;
 		public var goToX:Number;
 		public var goToY:Number;
+		
+		public var HP:int;
+		public var AD:int;
 		
 		[Embed(source = "../Images/player1.png")] private const PLAYER1:Class;
 		[Embed(source = "../Images/player2.png")] private const PLAYER2:Class;
@@ -61,11 +68,40 @@ package
 			FP.world.remove(this); 
 		}
 		
+		/*
+		 * 
+		 */ 
+		public function Attack():void
+		{
+			currentlyAttacking.TakeDamage(this.AD);
+			turnJustEnded = true;
+		}
+		
+		/*
+		 * 
+		 */ 
+		public function TakeDamage(dam:int):void 
+		{
+			this.HP -= dam;
+			
+			if ( this.HP < 1 )
+			{
+				// remove this entity from the turnVector
+				var index:int = MyWorld.instance.turnVector.indexOf(name);
+				// start at index 'index' and delete 1 item from there
+				MyWorld.instance.turnVector.splice(index, 1);
+				
+				// Death animation?
+				this.destroy();
+			}
+		}
+		
 		public function EndTurn():void 
 		{
 			turnJustEnded = false;
-			MyWorld.currentTurn = this.nextUp;
-			MyWorld.nextTurn = this.nextNextUp;
+			//MyWorld.currentTurn = this.nextUp;
+			//MyWorld.nextTurn = this.nextNextUp;
+			MyWorld.instance.ChangeTurn();
 		}
 		
 		/*public function HandleMovementRadius():void
@@ -105,7 +141,9 @@ package
 			turnJustEnded = true;
 		}
 		
-		public function HandleMovementRadius():void{}
+		public function HandleMovementRadius():void { }
+		
+		public function HandleAttackRadius():void{}
 		
 		override public function update():void
 		{
@@ -124,9 +162,25 @@ package
 				HandleMovement();
 			}
 			
+			if ( attackRadius )
+			{
+				HandleAttackRadius();
+			}
+			
+			if ( attackRadiusHandled )
+			{
+				attackRadius = false;
+			}
+		
+			if ( attackCommand )
+			{
+				Attack();
+			}
+			
 			if ( turnJustEnded )
 			{
 				moveCommand = false;
+				attackCommand = false;
 				EndTurn();
 			}
 		}

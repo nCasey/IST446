@@ -26,22 +26,17 @@ package
 		/** The Singleton instance */
 		public static var instance:MyWorld;
 		
-		public static var currentTurn:String;
-		public static var nextTurn:String;
-		public static var nextNextTurn:String;
-		
 		public var player1:Player1;
 		public var player2:Player2;
 		public var player3:Player3;
-		
-		// Now make an array containng 5 enemies
-		public var enemyArray:Array;
 		
 		public var enemy1:Enemy;
 		public var enemy2:Enemy;
 		public var enemy3:Enemy;
 		public var enemy4:Enemy;
 		public var enemy5:Enemy;
+		
+		public var cancelButton:CancelButton;
 		
 		// Max movement range = 3. So max number of moveBlocks is 24.
 		// Draw a diagram to confirm.
@@ -72,7 +67,17 @@ package
 		
 		public var moveHereBlock:MoveHereBlock;
 		
+		public var attackHereBlock:AttackHereBlock;
+		
 		public var turnCounter:TurnCounter;
+		
+		public var currentCommand:String;
+		
+		public var turnVector:Vector.<String>;// = Vector.<String>(["Player 1", "Player 2", "Player 3", "Enemy 1", "Enemy 2", "Enemy 3", "Enemy 4", "Enemy 5", "idle"]);
+		public static var currentTurn:String;// = turnVector[0];
+		public static var nextTurn:String;
+		public static var nextNextTurn:String;
+		public static var currentTurnIndex:int = 0;
 		
 		public function MyWorld() 
 		{	
@@ -97,6 +102,15 @@ package
 				currentTurn = "Player 1";
 				nextTurn = "Player 2";
 			}
+			
+			// This one doesn't seem to be working?
+			// When the current turn is enemy 5, the ticker says
+			// "next Turn: null"  so I'm trying to stop that here
+			else if ( currentTurn == "Enemey 5" )
+			{
+				nextTurn = "Player 1";
+			}
+			
 			super.update();
 		}
 		
@@ -109,23 +123,36 @@ package
 		
 		public function Play():void
 		{
-			player1 = new Player1(100, 200); // , "Player 1", "Player 2", "Player 3");
+			player1 = new Player1(7 * 32, 7 * 32); // , "Player 1", "Player 2", "Player 3");
 			add(player1);
-			player2 = new Player2(100, 300); //, "Player 2", "Player 3", "Enemy 1");
+			player2 = new Player2(7 * 32, 9 * 32); //, "Player 2", "Player 3", "Enemy 1");
 			add(player2);
-			player3 = new Player3(100, 400); // , "Player 3", "Enemy 1", "Enemy 2");
+			player3 = new Player3(7 * 32, 11 * 32); // , "Player 3", "Enemy 1", "Enemy 2");
 			add(player3);
+			
+			add(new Level);
+			
+			turnVector = new Vector.<String>();
+			turnVector[0] = "Player 1";
+			turnVector[1] = "Player 2";
+			turnVector[2] = "Player 3";
+			turnVector[3] = "Enemy 1";
+			turnVector[4] = "Enemy 2";
+			turnVector[5] = "Enemy 3";
+			turnVector[6] = "Enemy 4";
+			turnVector[7] = "Enemy 5";
+			turnVector[8] = "idle";
 			
 			add(new MoveButton(1024 - 100, 0, "Move"));
 			add(new AttackButton(1024 - 200, 0, "Attack"));
 			//add(new Button(1024 - 100, 100, "Change background color!", TYPE_ONE));
 			//add(new Button(1024 - 200, 100, "Change background color!", TYPE_ONE));
 			
-			enemy1 = new Enemy(700, 100, "Enemy 1", "Enemy 2", "Enemy 3");
-			enemy2 = new Enemy(700, 200, "Enemy 2", "Enemy 3", "Enemy 4");
-			enemy3 = new Enemy(700, 300, "Enemy 3", "Enemy 4", "Enemy 5");
-			enemy4 = new Enemy(700, 400, "Enemy 4", "Enemy 5", "idle");
-			enemy5 = new Enemy(700, 500, 'Enemy 5', "idle", "Player 1");
+			enemy1 = new Enemy(10 * 32, 5 * 32, "Enemy 1", "Enemy 2", "Enemy 3");
+			enemy2 = new Enemy(10 * 32, 7 * 32, "Enemy 2", "Enemy 3", "Enemy 4");
+			enemy3 = new Enemy(10 * 32, 9 * 32, "Enemy 3", "Enemy 4", "Enemy 5");
+			enemy4 = new Enemy(10 * 32, 11 * 32, "Enemy 4", "Enemy 5", "idle");
+			enemy5 = new Enemy(10 * 32, 13 * 32, 'Enemy 5', "idle", "Player 1");
 			
 			add(enemy1);
 			add(enemy2);
@@ -133,7 +160,7 @@ package
 			add(enemy4);
 			add(enemy5);
 			
-			enemyArray = new Array(enemy1, enemy2, enemy3, enemy4, enemy5);
+			//enemyArray = new Array(enemy1, enemy2, enemy3, enemy4, enemy5);
 			
 			currentTurn = "Player 1";
 			nextTurn = "Player 2";
@@ -258,8 +285,35 @@ package
 		
 		public function AddMoveHereBlock(x:Number, y:Number):void
 		{
+			currentCommand = "move";
 			moveHereBlock = new MoveHereBlock(x + 32, y);
 			add(moveHereBlock);
+		}
+		
+		public function AddCancelButton():void
+		{
+			cancelButton = new CancelButton(1024 - 100, 100);
+			add(cancelButton);
+		}
+		
+		public function AddAttackHereBlock(x:Number, y:Number):void
+		{
+			currentCommand = "attack";
+			attackHereBlock = new AttackHereBlock(x + 32, y);
+			add(attackHereBlock);
+		}
+		
+		public function ChangeTurn():void
+		{
+			// so, the vector shift method removes the first element and returns it.
+			// the push method adds the element in at the end,
+			// so do a shift followed by a push
+			
+			//currentTurn = turnVector.shift();
+			var justEnded:String = turnVector.shift();
+			currentTurn = turnVector[0];
+			nextTurn = turnVector[1];
+			turnVector.push(justEnded);
 		}
 	} // end Class 
 } // end package
