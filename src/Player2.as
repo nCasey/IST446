@@ -5,17 +5,20 @@ package
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.FP;
+	import net.flashpunk.graphics.Spritemap;
 	
 	public class Player2 extends Players
 	{
 		// Player.png is 20x40 pixels
-		[Embed(source = "../Images/player2.png")] private const PLAYER2:Class;
+		[Embed(source = "../Images/Sniper.png")] private const PLAYER2:Class;
 		
 		// Player 2 is Sniper
 		public function Player2(X:Number, Y:Number)
 		{
+			sprite = new Spritemap(PLAYER2, 32, 32);
+			
 			setHitbox(32, 32);
-			graphic = new Image(PLAYER2);
+			graphic = sprite;
 			layer = 1;
 			turnJustEnded = false;
 			
@@ -28,7 +31,8 @@ package
 			// necesarry???
 			super(X, Y, name, nextUp, nextNextUp);
 			
-			HP = 15;
+			HP = 20;
+			MaxHP = HP;
 			AD = 15;
 		}
 		

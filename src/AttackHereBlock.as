@@ -21,6 +21,9 @@ package
 		
 		protected var valid:Graphic;
 		protected var invalid:Graphic;
+
+		public var enemyAttackFlag:Boolean = false;
+		public var enemyAttacking:Enemy;
 		
 		public function AttackHereBlock(X:Number=0, Y:Number=0) 
 		{
@@ -45,6 +48,11 @@ package
 			FP.world.remove(this); 
 		}
 		
+		public function HandleEnemyRadius():void
+		{
+			//if ( collide("player", 
+		}
+		
 		override public function update():void 
 		{
 			if (Input.pressed(Key.LEFT)) 
@@ -62,6 +70,11 @@ package
 			else if (Input.pressed(Key.DOWN)) 
 			{ 
 				y += 32;
+			}
+			
+			if ( enemyAttackFlag )
+			{
+				HandleEnemyRadius();
 			}
 			
 			// if ( (collide("radius", x, y)) && (collide("enemy", x, y)) )
@@ -157,6 +170,10 @@ package
 							MyWorld.instance.moveBlock23.suicide = true;
 							MyWorld.instance.moveBlock24.suicide = true;
 						}
+						
+						MyWorld.instance.cancelButton.destroy();
+						
+						thisPlayer.attackSfx.play();
 						
 						// kill yourself
 						destroy();

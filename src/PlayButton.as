@@ -15,7 +15,7 @@ package
 		override public function click():void
 		{
 			// send word to MyWorld that we need to start playing
-			MyWorld.instance.Start();
+			MyWorld.instance.ShowMenu();
 		}
 		
 	}

@@ -5,6 +5,8 @@ package
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.FP;
+	import net.flashpunk.graphics.Spritemap;
+	import net.flashpunk.Sfx;
 	
 	public class Players extends Entity
 	{	
@@ -23,6 +25,7 @@ package
 		public var moving:Boolean;
 		
 		public var HP:int;
+		public var MaxHP:int;
 		public var AD:int;
 		
 		public var xMovementHandled:Boolean = false;
@@ -31,9 +34,19 @@ package
 		public var directionX:int;
 		public var directionY:int;
 		
+		public var myCard:Card;
+		
+		protected var sprite:Spritemap;
+		
 		[Embed(source = "../Images/player1.png")] private const PLAYER1:Class;
 		[Embed(source = "../Images/player2.png")] private const PLAYER2:Class;
 		[Embed(source = "../Images/player3.png")] private const PLAYER3:Class;
+		
+		[Embed(source = "../Sounds/Attack2.mp3")] private const ATTACK:Class;
+		[Embed(source = "../Sounds/Success2.mp3")] private const MOVE:Class;
+		
+		public var attackSfx:Sfx = new Sfx(ATTACK);
+		public var moveSfx:Sfx = new Sfx(MOVE);
 		
 		public function Players(X:Number, Y:Number, Name:String, Next:String, NextNext:String)
 		{
@@ -51,6 +64,14 @@ package
 			layer = 1;
 			
 			type = "player";
+			
+			sprite.add("still", [1], 30, false);
+			sprite.add("down", [0, 1, 2], 10);
+			sprite.add("left", [3, 4, 5], 10);
+			sprite.add("right", [6, 7, 8], 10);
+			sprite.add("up", [9, 10, 11], 10);
+			
+			sprite.play("still");
 			
 			name = Name;
 			nextUp = Next;
@@ -72,6 +93,7 @@ package
 		
 		public function destroy():void
 		{
+			myCard.suicide = true;
 			FP.world.remove(this); 
 		}
 		
@@ -90,6 +112,9 @@ package
 		public function TakeDamage(dam:int):void 
 		{
 			this.HP -= dam;
+			
+			//for debug
+			//moveSfx.play();
 			
 			if ( this.HP < 1 )
 			{
@@ -155,7 +180,16 @@ package
 			
 				if ( doneWaiting )
 				{
-					x += (directionX * 1);
+					x += directionX;
+					if ( directionX > 0 )
+					{
+						sprite.play("right");
+					}
+					else
+					{
+						sprite.play("left");
+					}
+					
 					// Play sprite animation here
 				}
 				
@@ -177,8 +211,16 @@ package
 			
 				if ( doneWaiting )
 				{
-					y += (directionY * 1);
+					y += directionY;
 					// Play sprite animation here
+					if ( directionY > 0 )
+					{
+						sprite.play("down");
+					}
+					else
+					{
+						sprite.play("up");
+					}
 				}
 				
 				doneWaiting = false;
@@ -224,6 +266,7 @@ package
 			
 			if ( xMovementHandled )
 			{
+				sprite.play("still");
 				HandleMovementY();
 			}
 			
@@ -244,6 +287,7 @@ package
 			
 			if ( turnJustEnded )
 			{
+				sprite.play("still");
 				moveCommand = false;
 				xMovementHandled = false;
 				attackCommand = false;

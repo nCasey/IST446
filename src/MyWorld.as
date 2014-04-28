@@ -1,6 +1,7 @@
 package  
 {
 	
+	import adobe.utils.CustomActions;
 	import net.flashpunk.World;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
@@ -35,6 +36,16 @@ package
 		public var enemy3:Enemy;
 		public var enemy4:Enemy;
 		public var enemy5:Enemy;
+		
+		public var player1Card:Card;
+		public var player2Card:Card;
+		public var player3Card:Card;
+		
+		public var enemy1Card:EnemyCard;
+		public var enemy2Card:EnemyCard;
+		public var enemy3Card:EnemyCard;
+		public var enemy4Card:EnemyCard;
+		public var enemy5Card:EnemyCard;
 		
 		public var cancelButton:CancelButton;
 		
@@ -79,6 +90,9 @@ package
 		public static var nextNextTurn:String;
 		public static var currentTurnIndex:int = 0;
 		
+		public var menu:Menu;
+		public var intro:IntroCutscene;
+		
 		public function MyWorld() 
 		{	
 			instance = this;
@@ -94,6 +108,21 @@ package
 			playButton = new PlayButton(500, 300, "Play");
 			add(playButton);
 		} 
+		
+		public function ShowMenu():void
+		{
+			panel.destroy();
+			playButton.destroy();
+			
+			menu = new Menu();
+			add(menu);
+		}
+		
+		public function Intro():void
+		{
+			intro = new IntroCutscene(50, 50);
+			add (intro);
+		}
 		
 		override public function update():void 
 		{
@@ -116,24 +145,22 @@ package
 		
 		public function Start():void
 		{
-			panel.destroy();
-			playButton.destroy();
 			Play();
 		}
 		
 		public function Play():void
 		{
-			player1 = new Player1(7 * 32, 7 * 32); // , "Player 1", "Player 2", "Player 3");
+			player1 = new Player1(11 * 32, 9 * 32); // , "Player 1", "Player 2", "Player 3");
 			add(player1);
-			player2 = new Player2(7 * 32, 9 * 32); //, "Player 2", "Player 3", "Enemy 1");
+			player2 = new Player2(15 * 32, 13 * 32); //, "Player 2", "Player 3", "Enemy 1");
 			add(player2);
-			player3 = new Player3(7 * 32, 11 * 32); // , "Player 3", "Enemy 1", "Enemy 2");
+			player3 = new Player3(13 * 32, 13 * 32); // , "Player 3", "Enemy 1", "Enemy 2");
 			add(player3);
 			
 			add(new Level((1024 / 4), 32));
 			
 			// FOR DEBUG
-			add(new TestBlock(0, 0));
+			//add(new TestBlock(0, 0));
 			
 			turnVector = new Vector.<String>();
 			turnVector[0] = "Player 1";
@@ -151,11 +178,11 @@ package
 			//add(new Button(1024 - 100, 100, "Change background color!", TYPE_ONE));
 			//add(new Button(1024 - 200, 100, "Change background color!", TYPE_ONE));
 			
-			enemy1 = new Enemy(10 * 32, 5 * 32, "Enemy 1", "Enemy 2", "Enemy 3");
-			enemy2 = new Enemy(10 * 32, 7 * 32, "Enemy 2", "Enemy 3", "Enemy 4");
-			enemy3 = new Enemy(10 * 32, 9 * 32, "Enemy 3", "Enemy 4", "Enemy 5");
-			enemy4 = new Enemy(10 * 32, 11 * 32, "Enemy 4", "Enemy 5", "idle");
-			enemy5 = new Enemy(10 * 32, 13 * 32, 'Enemy 5', "idle", "Player 1");
+			enemy1 = new Enemy(16 * 32, 5 * 32, "Enemy 1", "Enemy 2", "Enemy 3");
+			enemy2 = new Enemy(15 * 32, 4 * 32, "Enemy 2", "Enemy 3", "Enemy 4");
+			enemy3 = new Enemy(22 * 32, 10 * 32, "Enemy 3", "Enemy 4", "Enemy 5");
+			enemy4 = new Enemy(24 * 32, 11 * 32, "Enemy 4", "Enemy 5", "idle");
+			enemy5 = new Enemy(12 * 32, 11 * 32, 'Enemy 5', "idle", "Player 1");
 			
 			add(enemy1);
 			add(enemy2);
@@ -170,6 +197,31 @@ package
 			
 			turnCounter = new TurnCounter(0, 0, currentTurn);
 			add(turnCounter);
+			
+			updateLists();
+			
+			AddCards();
+		}
+		
+		public function AddCards():void
+		{
+			player1Card = new Card(0, 200, "one", player1.name);
+			add(player1Card);
+			player2Card = new Card(0, 350, "two", "Player 2");
+			add(player2Card);
+			player3Card = new Card(0, 500, "three", "Player 3");
+			add(player3Card);
+			
+			enemy1Card = new EnemyCard(1024 - 200, 100, "Enemy 1");
+			add(enemy1Card);
+			enemy2Card = new EnemyCard(1024 - 200, 200, "Enemy 2");
+			add(enemy2Card);
+			enemy3Card = new EnemyCard(1024 - 200, 300, "Enemy 3");
+			add(enemy3Card);
+			enemy4Card = new EnemyCard(1024 - 200, 400, "Enemy 4");
+			add(enemy4Card);
+			enemy5Card = new EnemyCard(1024 - 200, 500, "Enemy 5");
+			add(enemy5Card);
 		}
 		
 		// adds a 1 tile movement radius diamond centered at x,y
@@ -295,7 +347,7 @@ package
 		
 		public function AddCancelButton():void
 		{
-			cancelButton = new CancelButton(1024 - 100, 100);
+			cancelButton = new CancelButton(1024 - 300, 0);
 			add(cancelButton);
 		}
 		

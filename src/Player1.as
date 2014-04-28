@@ -2,19 +2,22 @@ package
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.FP;
 	
 	public class Player1 extends Players
 	{
-		[Embed(source = "../Images/player1.png")] private const PLAYER1:Class;
+		[Embed(source = "../Images/Lazer.png")] private const PLAYER1:Class;
 		
 		// Player 1 is Heavy
 		public function Player1(X:Number, Y:Number)
 		{
+			sprite = new Spritemap(PLAYER1, 32, 32);
+			
 			setHitbox(32, 32);
-			graphic = new Image(PLAYER1);
+			graphic = sprite;
 			layer = 1;
 			turnJustEnded = false;
 			
@@ -27,7 +30,8 @@ package
 			// is this even necessary?????
 			super(X, Y, name, nextUp, nextNextUp);
 			
-			HP = 25;
+			HP = 40;
+			MaxHP = HP;
 			AD = 5;
 		}
 		

@@ -5,17 +5,20 @@ package
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.FP;
+	import net.flashpunk.graphics.Spritemap;
 	
 	public class Player3 extends Players
 	{
 		// Player.png is 20x40 pixels
-		[Embed(source = "../Images/player3.png")] private const PLAYER3:Class;
+		[Embed(source = "../Images/Trapper.png")] private const PLAYER3:Class;
 		
 		// Player 3 is Hacker
 		public function Player3(X:Number, Y:Number)
 		{
+			sprite = new Spritemap(PLAYER3, 32, 32);
+			
 			setHitbox(32, 32);
-			graphic = new Image(PLAYER3);
+			graphic = sprite;
 			layer = 1;
 			turnJustEnded = false;
 			
@@ -28,7 +31,8 @@ package
 			// is this even necessary?????
 			super(X, Y, name, nextUp, nextNextUp);
 			
-			HP = 20;
+			HP = 30;
+			MaxHP = HP;
 			AD = 10;
 		}
 		

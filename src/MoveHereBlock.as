@@ -166,6 +166,8 @@ package
 						
 						MyWorld.instance.cancelButton.destroy();
 						
+						thisPlayer.moveSfx.play();
+						
 						// kill yourself
 						destroy();
 					}
