@@ -75,6 +75,25 @@ package
 		}
 		
 		/*
+		 * Wait a short time. Used by Death Animation.
+		 */
+		public function Wait2():void
+		{
+			time++;
+			
+			/*
+			 * Main adds our MyWorld, using 60 frames per second.
+			 * Update gets called once per frame.
+			 */ 
+			
+			if ( time == 20 )
+			{
+				time = 0;
+				doneWaiting = true;
+			}
+		}
+		
+		/*
 		 * 
 		 */ 
 		public function TakeDamage(dam:int):void 

@@ -20,9 +20,13 @@ package
 		public var nextNextUp:String;
 		public var goToX:Number;
 		public var goToY:Number;
+		public var moving:Boolean;
 		
 		public var HP:int;
 		public var AD:int;
+		
+		public var moving:Boolean;
+		public var atDestination:Boolean;
 		
 		[Embed(source = "../Images/player1.png")] private const PLAYER1:Class;
 		[Embed(source = "../Images/player2.png")] private const PLAYER2:Class;
@@ -182,6 +186,22 @@ package
 				moveCommand = false;
 				attackCommand = false;
 				EndTurn();
+			}
+		
+			/*
+			 * Gonna change up the whole movement process. Now the players just 
+			 * move immediately to their destination, which is seen as them dissapearing
+			 * and reappearing at their destination. We ideally should have the process take time
+			 * so we can play their walking animations.
+			 */
+			if ( moving )
+			{
+				
+			}
+			
+			if ( atDestination )
+			{
+				
 			}
 		}
 			
