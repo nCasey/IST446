@@ -66,87 +66,112 @@ package
 			
 			if ( collide("radius", x, y) )
 			{
-				graphic = valid;
-				
-				// Allow the player to move here. 
-				if ( Input.pressed(Key.ENTER)) 
+				if ( !collide("level", x, y) )
 				{
-					var turn:String = MyWorld.currentTurn;
-					var thisPlayer:Players = MyWorld.instance.getInstance(turn);
+					graphic = valid;
 					
-					thisPlayer.moveCommand = true;
-					thisPlayer.goToX = x;
-					thisPlayer.goToY = y;
-					
-					// set a flag in the MoveBlocks so they can commit suicide
-					// Problem: Which moveBlocks?
-					
-					// Player 1 only has 4 moveBlocks
-					if ( thisPlayer.name == "Player 1" )
+					// Allow the player to move here. 
+					if ( Input.pressed(Key.ENTER)) 
 					{
-						MyWorld.instance.moveBlock1.suicide = true;
-						MyWorld.instance.moveBlock2.suicide = true;
-						MyWorld.instance.moveBlock3.suicide = true;
-						MyWorld.instance.moveBlock4.suicide = true;
+						var turn:String = MyWorld.currentTurn;
+						var thisPlayer:Players = MyWorld.instance.getInstance(turn);
+						
+						thisPlayer.moveCommand = true;
+						thisPlayer.goToX = x;
+						thisPlayer.goToY = y;
+						
+						if ( x > thisPlayer.x )
+						{
+							thisPlayer.directionX = 1;
+						}
+						else
+						{
+							thisPlayer.directionX = -1;
+						}
+						
+						if ( y > thisPlayer.y )
+						{
+							thisPlayer.directionY = 1;
+						}
+						else
+						{
+							thisPlayer.directionY = -1;
+						}
+						
+						
+						// set a flag in the MoveBlocks so they can commit suicide
+						// Problem: Which moveBlocks?
+						
+						// Player 1 only has 4 moveBlocks
+						if ( thisPlayer.name == "Player 1" )
+						{
+							MyWorld.instance.moveBlock1.suicide = true;
+							MyWorld.instance.moveBlock2.suicide = true;
+							MyWorld.instance.moveBlock3.suicide = true;
+							MyWorld.instance.moveBlock4.suicide = true;
+						}
+						
+						// Player 2 has 12 moveBlocks
+						else if ( thisPlayer.name == "Player 2" )
+						{
+							MyWorld.instance.moveBlock1.suicide = true;
+							MyWorld.instance.moveBlock2.suicide = true;
+							MyWorld.instance.moveBlock3.suicide = true;
+							MyWorld.instance.moveBlock4.suicide = true;
+							
+							MyWorld.instance.moveBlock5.suicide = true;
+							MyWorld.instance.moveBlock6.suicide = true;
+							MyWorld.instance.moveBlock7.suicide = true;
+							MyWorld.instance.moveBlock8.suicide = true;
+							
+							MyWorld.instance.moveBlock9.suicide = true;
+							MyWorld.instance.moveBlock10.suicide = true;
+							MyWorld.instance.moveBlock11.suicide = true;
+							MyWorld.instance.moveBlock12.suicide = true;
+						}
+						
+						// Player 3 has 24 moveBlocks
+						else if ( thisPlayer.name == "Player 3" )
+						{
+							MyWorld.instance.moveBlock1.suicide = true;
+							MyWorld.instance.moveBlock2.suicide = true;
+							MyWorld.instance.moveBlock3.suicide = true;
+							MyWorld.instance.moveBlock4.suicide = true;
+							
+							MyWorld.instance.moveBlock5.suicide = true;
+							MyWorld.instance.moveBlock6.suicide = true;
+							MyWorld.instance.moveBlock7.suicide = true;
+							MyWorld.instance.moveBlock8.suicide = true;
+							
+							MyWorld.instance.moveBlock9.suicide = true;
+							MyWorld.instance.moveBlock10.suicide = true;
+							MyWorld.instance.moveBlock11.suicide = true;
+							MyWorld.instance.moveBlock12.suicide = true;
+							
+							MyWorld.instance.moveBlock13.suicide = true;
+							MyWorld.instance.moveBlock14.suicide = true;
+							MyWorld.instance.moveBlock15.suicide = true;
+							MyWorld.instance.moveBlock16.suicide = true;
+							
+							MyWorld.instance.moveBlock17.suicide = true;
+							MyWorld.instance.moveBlock18.suicide = true;
+							MyWorld.instance.moveBlock19.suicide = true;
+							MyWorld.instance.moveBlock20.suicide = true;
+							
+							MyWorld.instance.moveBlock21.suicide = true;
+							MyWorld.instance.moveBlock22.suicide = true;
+							MyWorld.instance.moveBlock23.suicide = true;
+							MyWorld.instance.moveBlock24.suicide = true;
+						}
+						
+						MyWorld.instance.cancelButton.destroy();
+						
+						// kill yourself
+						destroy();
 					}
-					
-					// Player 2 has 12 moveBlocks
-					else if ( thisPlayer.name == "Player 2" )
-					{
-						MyWorld.instance.moveBlock1.suicide = true;
-						MyWorld.instance.moveBlock2.suicide = true;
-						MyWorld.instance.moveBlock3.suicide = true;
-						MyWorld.instance.moveBlock4.suicide = true;
-						
-						MyWorld.instance.moveBlock5.suicide = true;
-						MyWorld.instance.moveBlock6.suicide = true;
-						MyWorld.instance.moveBlock7.suicide = true;
-						MyWorld.instance.moveBlock8.suicide = true;
-						
-						MyWorld.instance.moveBlock9.suicide = true;
-						MyWorld.instance.moveBlock10.suicide = true;
-						MyWorld.instance.moveBlock11.suicide = true;
-						MyWorld.instance.moveBlock12.suicide = true;
-					}
-					
-					// Player 3 has 24 moveBlocks
-					else if ( thisPlayer.name == "Player 3" )
-					{
-						MyWorld.instance.moveBlock1.suicide = true;
-						MyWorld.instance.moveBlock2.suicide = true;
-						MyWorld.instance.moveBlock3.suicide = true;
-						MyWorld.instance.moveBlock4.suicide = true;
-						
-						MyWorld.instance.moveBlock5.suicide = true;
-						MyWorld.instance.moveBlock6.suicide = true;
-						MyWorld.instance.moveBlock7.suicide = true;
-						MyWorld.instance.moveBlock8.suicide = true;
-						
-						MyWorld.instance.moveBlock9.suicide = true;
-						MyWorld.instance.moveBlock10.suicide = true;
-						MyWorld.instance.moveBlock11.suicide = true;
-						MyWorld.instance.moveBlock12.suicide = true;
-						
-						MyWorld.instance.moveBlock13.suicide = true;
-						MyWorld.instance.moveBlock14.suicide = true;
-						MyWorld.instance.moveBlock15.suicide = true;
-						MyWorld.instance.moveBlock16.suicide = true;
-						
-						MyWorld.instance.moveBlock17.suicide = true;
-						MyWorld.instance.moveBlock18.suicide = true;
-						MyWorld.instance.moveBlock19.suicide = true;
-						MyWorld.instance.moveBlock20.suicide = true;
-						
-						MyWorld.instance.moveBlock21.suicide = true;
-						MyWorld.instance.moveBlock22.suicide = true;
-						MyWorld.instance.moveBlock23.suicide = true;
-						MyWorld.instance.moveBlock24.suicide = true;
-					}
-					
-					MyWorld.instance.cancelButton.destroy();
-					
-					// kill yourself
-					destroy();
+				}
+				else {
+					graphic = invalid;
 				}
 			}
 			else 

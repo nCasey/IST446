@@ -130,7 +130,10 @@ package
 			player3 = new Player3(7 * 32, 11 * 32); // , "Player 3", "Enemy 1", "Enemy 2");
 			add(player3);
 			
-			add(new Level);
+			add(new Level((1024 / 4), 32));
+			
+			// FOR DEBUG
+			add(new TestBlock(0, 0));
 			
 			turnVector = new Vector.<String>();
 			turnVector[0] = "Player 1";

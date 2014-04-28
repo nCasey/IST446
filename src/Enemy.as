@@ -20,6 +20,8 @@ package
 		public var HP:int;
 		public var AD:int;
 
+		public var dice:Boolean = false;
+		
 		public function Enemy(X:Number, Y:Number, Name:String, Next:String, NextNext:String)
 		{
 			
@@ -75,25 +77,6 @@ package
 		}
 		
 		/*
-		 * Wait a short time. Used by Death Animation.
-		 */
-		public function Wait2():void
-		{
-			time++;
-			
-			/*
-			 * Main adds our MyWorld, using 60 frames per second.
-			 * Update gets called once per frame.
-			 */ 
-			
-			if ( time == 20 )
-			{
-				time = 0;
-				doneWaiting = true;
-			}
-		}
-		
-		/*
 		 * 
 		 */ 
 		public function TakeDamage(dam:int):void 
@@ -131,12 +114,98 @@ package
 			var nearestPlayer:Entity = MyWorld.instance.nearestToEntity("player", this);
 			
 			// moveTowards((x of towards, y of towards, move amount, solidType to stop movement = NIL)
-			moveTowards(nearestPlayer.x, nearestPlayer.y, 32);
+			//moveTowards(nearestPlayer.x, nearestPlayer.y, 32);
 			
 			/*
 			 * Idea: pass in 0 for one of the x or y params for moveTowards().
 			 * Question is: how do we know if x or y is better?
+			 * Maybe just determine randomly....
 			 */
+			
+			//var diceRoll:int = Math.random(); // between 0 and 1
+			
+			
+			
+			// if we're gonna go horizontally
+			if ( dice )
+			{
+				dice = !dice;
+				
+				//if were gonna go right
+				if ( nearestPlayer.x > x )
+				{
+					x += 32;
+					if ( collide("player", x, y) || collide("level", x, y) )
+					{
+						// undo
+						x -= 32;
+						//try again!
+					}
+					else
+					{
+						doneYet = true;
+					}
+				}
+				
+				// if were gonna go left
+				else
+				{
+					dice = !dice;
+					
+					x -= 32;
+					if ( collide("player", x, y) || collide("level", x, y) )
+					{
+						// undo
+						x += 32;
+						//try again!
+						//Move();
+					}
+					
+					else
+					{
+						doneYet = true;
+					}
+				}
+			}
+			// if were gonna go vertically
+			else
+			{
+				//if were gonna go down
+				if ( nearestPlayer.y > y )
+				{
+					y += 32;
+					if ( collide("player", x, y) || collide("level", x, y) )
+					{
+						// undo
+						y -= 32;
+						//try again!
+						//Move();
+					}
+					
+					else
+					{
+						doneYet = true;
+					}
+				}
+				
+				// if were gonna go up
+				else
+				{
+					y -= 32;
+					if ( collide("player", x, y) || collide("level", x, y) )
+					{
+						// undo
+						y += 32;
+						//try again!
+						//Move();
+					}
+					
+					else
+					{
+						doneYet = true;
+					}
+				}
+			}
 			
 			turnJustEnded = true;
 		}

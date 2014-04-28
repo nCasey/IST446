@@ -25,8 +25,11 @@ package
 		public var HP:int;
 		public var AD:int;
 		
-		public var nowMoving:Boolean;
-		public var atDestination:Boolean;
+		public var xMovementHandled:Boolean = false;
+		public var doneWaiting:Boolean = false;
+		public var time:int = 0;
+		public var directionX:int;
+		public var directionY:int;
 		
 		[Embed(source = "../Images/player1.png")] private const PLAYER1:Class;
 		[Embed(source = "../Images/player2.png")] private const PLAYER2:Class;
@@ -134,20 +137,72 @@ package
 			moveRadiusHandled = true;
 		}*/
 		
-		/*
-		 * MoveHereBlock will set flag that triggers this movement.
-		 * It will also set the values for goToX and goToY
-		 */
-		public function HandleMovement():void
-		{
-			moveTo(goToX, goToY);
-			
-			turnJustEnded = true;
-		}
-		
 		public function HandleMovementRadius():void { }
 		
-		public function HandleAttackRadius():void{}
+		public function HandleAttackRadius():void { }
+		
+		public function HandleMovementX():void
+		{
+			if ( x == goToX )
+			{
+				xMovementHandled = true;
+				moveCommand = false;
+			}
+			
+			else 
+			{
+				Wait();
+			
+				if ( doneWaiting )
+				{
+					x += (directionX * 1);
+					// Play sprite animation here
+				}
+				
+				doneWaiting = false;
+			}
+		}
+		
+		public function HandleMovementY():void
+		{
+			if ( y == goToY )
+			{
+				turnJustEnded = true;
+				xMovementHandled = false;
+			}
+			
+			else 
+			{
+				Wait();
+			
+				if ( doneWaiting )
+				{
+					y += (directionY * 1);
+					// Play sprite animation here
+				}
+				
+				doneWaiting = false;
+			}
+		}
+		
+		/*
+		 * Wait 1.5 seconds to "think".
+		 */
+		public function Wait():void
+		{	
+			time++;
+			
+			/*
+			 * Main adds our MyWorld, using 60 frames per second.
+			 * Update gets called once per frame.
+			 */ 
+			
+			if ( time == 1 )
+			{
+				time = 0;
+				doneWaiting = true;
+			}
+		}
 		
 		override public function update():void
 		{
@@ -163,7 +218,13 @@ package
 			
 			if ( moveCommand )
 			{
-				HandleMovement();
+				//HandleMovement();
+				HandleMovementX();
+			}
+			
+			if ( xMovementHandled )
+			{
+				HandleMovementY();
 			}
 			
 			if ( attackRadius )
@@ -184,6 +245,7 @@ package
 			if ( turnJustEnded )
 			{
 				moveCommand = false;
+				xMovementHandled = false;
 				attackCommand = false;
 				EndTurn();
 			}
@@ -194,15 +256,7 @@ package
 			 * and reappearing at their destination. We ideally should have the process take time
 			 * so we can play their walking animations.
 			 */
-			if ( nowMoving )
-			{
-				
-			}
 			
-			if ( atDestination )
-			{
-				
-			}
 		}
 			
 	}

@@ -3,6 +3,8 @@ NOTES:
 	In case you were wondering, the "idle" turn is necessary for the wrap around from the last
 	enemy to the first player to work properly; otherwise those two turns were going in tandem(sp?)
 	
+	BUG: after player1 attack, turncounter doesnt update. wtf
+	
 1.) Flashpunk's Entity class has some useful functions:
 	distanceFrom -> compares two entiies 
 	distanceToPoint
@@ -45,3 +47,11 @@ TODO:
 	add art
 	
 	PROBLEM: if I hit attack, then change my mind and want to move
+
+Here are the rectangles that are going to be blocked off. starting counting at 0. if i say tile (3, 4) will be blocked off, that corresponds to (3*32, 4*32) in pixels:
+1.) ULHC: (2, 0) URHC: (6, 0) LLHC: (2, 5) LRHC: (6, 5)
+2.) ULHC: (9, 0) URHC: (11, 0) LLHC: (9, 3) LRHC: (11, 3)
+3.) ULHC: (14, 2) URHC: (16, 2) LLHC: (14, 5) LRHC: (16, 5)
+4.) ULHC: (5, 7) URHC: (8, 7) LLHC: (5, 10) LRHC: (8, 10)
+5.) ULHC: (10, 6) URHC: (13, 6) LLHC: (10, 11) LRHC: (13, 11)
+6.) ULHC: (9, 13) URHC: (11, 13) LLHC: (9, 16) LRHC: (11, 16)
