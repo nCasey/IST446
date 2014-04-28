@@ -5,11 +5,14 @@ package
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.FP;
+	import net.flashpunk.graphics.Spritemap;
 	
 	public class Enemy extends Entity
 	{
 		// Player.png is 20x40 pixels
-		[Embed(source = "../Images/enemy.png")] private const ENEMY:Class;
+		[Embed(source = "../Images/Anubis.png")] private const ENEMY:Class;
+		
+		public var sprENEMY:Spritemap = new Spritemap(ENEMY, 32, 32);
 		
 		public var turnJustEnded:Boolean;
 		public var nextUp:String;
@@ -25,7 +28,15 @@ package
 		public function Enemy(X:Number, Y:Number, Name:String, Next:String, NextNext:String)
 		{
 			
-			graphic = new Image(ENEMY);
+			sprENEMY.add("walkRight", [6, 7, 8], 10, true);
+			sprENEMY.add("walkLeft", [3, 4, 5], 10, true);
+			sprENEMY.add("walkUp", [9, 10, 11], 10, true);
+			sprENEMY.add("walkDown", [0, 1, 2], 10, true);
+			sprENEMY.add("stand", [6], 10, false);
+		
+			sprENEMY.play("walkLeft");
+			
+			graphic = sprENEMY;
 			layer = 2;
 			turnJustEnded = false;
 			type = "enemy";
