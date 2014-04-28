@@ -25,7 +25,7 @@ package
 		public var HP:int;
 		public var AD:int;
 		
-		public var moving:Boolean;
+		public var nowMoving:Boolean;
 		public var atDestination:Boolean;
 		
 		[Embed(source = "../Images/player1.png")] private const PLAYER1:Class;
@@ -194,7 +194,7 @@ package
 			 * and reappearing at their destination. We ideally should have the process take time
 			 * so we can play their walking animations.
 			 */
-			if ( moving )
+			if ( nowMoving )
 			{
 				
 			}
