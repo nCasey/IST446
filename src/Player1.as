@@ -5,33 +5,16 @@ package
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.FP;
-	import net.flashpunk.graphics.Spritemap;
 	
 	public class Player1 extends Players
 	{
-		[Embed(source = "../Images/Lazer.png")] private const PLAYER1:Class;
-		
-		public var sprPLAYER1:Spritemap = new Spritemap(PLAYER1, 32, 32);
-	
-		
-		
-		
+		[Embed(source = "../Images/player1.png")] private const PLAYER1:Class;
 		
 		// Player 1 is Heavy
 		public function Player1(X:Number, Y:Number)
 		{
-			
-			sprPLAYER1.add("walkRight", [6, 7, 8], 10, true);
-			sprPLAYER1.add("walkLeft", [3, 4, 5], 10, true);
-			sprPLAYER1.add("walkUp", [9, 10, 11], 10, true);
-			sprPLAYER1.add("walkDown", [0, 1, 2], 10, true);
-			sprPLAYER1.add("stand", [6], 10, false);
-		
-			sprPLAYER1.play("walkRight");
-			
-			
 			setHitbox(32, 32);
-			graphic = sprPLAYER1;
+			graphic = new Image(PLAYER1);
 			layer = 1;
 			turnJustEnded = false;
 			

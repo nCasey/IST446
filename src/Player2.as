@@ -5,31 +5,17 @@ package
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.FP;
-	import net.flashpunk.graphics.Spritemap;
 	
 	public class Player2 extends Players
 	{
 		// Player.png is 20x40 pixels
-		[Embed(source = "../Images/Sniper.png")] private const PLAYER2:Class;
-		
-		public var sprPLAYER2:Spritemap = new Spritemap(PLAYER2, 32, 32);
-	
-		
+		[Embed(source = "../Images/player2.png")] private const PLAYER2:Class;
 		
 		// Player 2 is Sniper
 		public function Player2(X:Number, Y:Number)
 		{
-			sprPLAYER2.add("walkRight", [6, 7, 8], 10, true);
-			sprPLAYER2.add("walkLeft", [3, 4, 5], 10, true);
-			sprPLAYER2.add("walkUp", [9, 10, 11], 10, true);
-			sprPLAYER2.add("walkDown", [0, 1, 2], 10, true);
-			sprPLAYER2.add("stand", [6], 10, false);
-		
-			sprPLAYER2.play("walkRight");
-			
-			
 			setHitbox(32, 32);
-			graphic = sprPLAYER2;
+			graphic = new Image(PLAYER2);
 			layer = 1;
 			turnJustEnded = false;
 			
